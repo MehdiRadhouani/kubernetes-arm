@@ -1,0 +1,26 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: test-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: nfs-ssd-node1
+  resources:
+    requests:
+      storage: 1Mi
+  volumeName: "test"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: test
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: nfs-ssd-node1
+  nfs:
+    path: /mnt/extssd1/kube/nfs
+    server: 192.168.178.63

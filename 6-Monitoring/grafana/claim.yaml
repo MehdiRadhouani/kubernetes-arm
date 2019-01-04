@@ -1,0 +1,29 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: grafana-claim
+  namespace: monitoring
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: nfs-ssd-node1
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName:  grafana 
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: grafana
+  labels:
+    name: grafana
+spec:
+  capacity:
+    storage: 1Gi
+  storageClassName: nfs-ssd-node1
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    path: /mnt/extssd1/kube/nfs
+    server: 192.168.178.63
